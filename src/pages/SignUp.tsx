@@ -1,6 +1,10 @@
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
+import { auth } from '../firebase/config';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
@@ -19,14 +23,18 @@ const SignUp = () => {
     e.preventDefault();
     // Handle form submission logic here
     try{
+      await createUserWithEmailAndPassword(auth,email,password)
+      navigate('/');
+
     }
     catch(error){
-    console.log(firstName, lastName, email, password, confirmPassword, error.message)
+    setError(error.message)
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      {error&&<p>{error}</p>}
       <div className="hero bg-base-200 min-h-screen">
         <div className="hero-content flex-col lg">
           <div className="text-center lg:text-left">

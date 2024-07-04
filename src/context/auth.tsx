@@ -1,32 +1,3 @@
-// import { createContext, FC } from "react";
-// import { useState } from "react";
-
-// interface AuthContextTypes{
-//     user: User | null;
-//     isLoading: boolean;
-// }
-// export const AuthContext = createContext<AuthContextTypes>({
-//     user: null,
-//     isLoading: false,
-//     });
-//     interface AuthProviderProps {
-//         children: React.ReactElement;   
-//     }
-// export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-//     const [user, setUser] = useState<User | null>(null);
-//     const [isLoading, setLoading] = useState<boolean>(false);
-//     // const [error, setError] = useState(null);
-//     const value = { user, isLoading };
-
-//     return (
-       
-   
-        
-//         <AuthContext.Provider value={{ user }}>
-//             {children}
-//         </AuthContext.Provider>
-//     ); 
-// }
 
 import { createContext, FC, ReactElement, useEffect, useState } from "react";
 import { auth } from "../firebase/config.ts";
@@ -74,7 +45,7 @@ useEffect(() => {
 
   return (
     <AuthContext.Provider value={value}>
-      {children}
+      {!isLoading &&children}
     </AuthContext.Provider>
   ); 
 }
