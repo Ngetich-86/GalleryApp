@@ -1,34 +1,35 @@
-import React, { useState } from "react";
+
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import {auth} from "../firebase/config";
+import { auth } from "../firebase/config";
 
 const Login = () => {
-    const [error, setError] = useState(false);
-    const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
-const handleSubmit = async(e)=>{
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const email = e.target[0].value;
-    const password = e.target[1].value;
+    const formData = new FormData(e.target as HTMLFormElement);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/")
+      navigate("/");
     } catch (err) {
-      setError(true);
-    }   
-}
+      setError(err.message);
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit}>
-      {error&&<p>{error}</p>}
+      {error && <p className="text-red-500">{error}</p>}
       <div className="hero bg-base-200 min-h-screen">
         <div className="hero-content flex-col lg">
           <div className="text-center lg:text-left">
             <h1 className="text-5xl font-bold">Login Now!</h1>
-            <p className="py-6">
-              Login to access all the features for free
-            </p>
+            <p className="py-6">Login to access all the features for free</p>
           </div>
           <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
             <div className="card-body">
@@ -41,6 +42,7 @@ const handleSubmit = async(e)=>{
                   placeholder="Email"
                   className="input input-bordered"
                   required
+                  name="email"
                 />
               </div>
               <div className="form-control">
@@ -52,19 +54,23 @@ const handleSubmit = async(e)=>{
                   placeholder="Password"
                   className="input input-bordered"
                   required
+                  name="password"
                 />
               </div>
-              <p>You don't have an account? <Link to="/signup">Sign Up</Link></p>
+              <p>
+                Don't have an account? <Link to="/signup">Sign Up</Link>
+              </p>
               <div className="form-control mt-6">
-                <button type="submit" className="btn btn-primary">Login Now</button>
+                <button type="submit" className="btn btn-primary">
+                  Login Now
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </form>
-    
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
