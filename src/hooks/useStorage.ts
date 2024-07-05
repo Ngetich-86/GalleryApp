@@ -1,21 +1,24 @@
-
-// import { uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+// import { uploadBytesResumable, getDownloadURL, ref } from 'firebase/storage';
 // import { useState } from 'react';
 // import { v4 as uuidv4 } from 'uuid';
-// // import firebase from '../firebase/config';
-// import { storage } from '../firebase/config';
+// import { storage } from '../firebase/config'; // Ensure this is the correct path to your config
+// import { db } from '../firebase/config';
+// import { collection, addDoc } from 'firebase/firestore';
+// import { useAuth } from './useAuth';
 
 // const useStorage = () => {
 //   const [progress, setProgress] = useState<number>(0);
 //   const [error, setError] = useState<Error | null>(null);
 //   const [url, setUrl] = useState<string | null>(null);
+//   const {user} = useAuth();
+//   console.log(user);
 
 //   const startUpload = (file: File) => {
 //     if (!file) return;
 
 //     const fileId = uuidv4() + file.name;
 //     console.log(fileId);
-//     const storageRef = storage().ref(fileId); // Use fileId for unique naming
+//     const storageRef = ref(storage, fileId); // Use fileId for unique naming
 //     const uploadTask = uploadBytesResumable(storageRef, file);
 
 //     uploadTask.on(
@@ -31,7 +34,13 @@
 //         try {
 //           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 //           setUrl(downloadURL);
-//           setProgress(progress);
+//           setProgress(100); // Set progress to 100% upon successful upload
+//           //store data in firestore
+//           await addDoc(collection(db, 'images'), {
+//             imageUrl: downloadURL,
+//             createdAt: new Date(),
+//             userEmail: user?.email,
+//           });
 //         } catch (err) {
 //           setError(err as Error);
 //         }
@@ -49,6 +58,7 @@
 
 // export { useStorage };
 
+//test code
 import { uploadBytesResumable, getDownloadURL, ref } from 'firebase/storage';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -68,7 +78,7 @@ const useStorage = () => {
     if (!file) return;
 
     const fileId = uuidv4() + file.name;
-    console.log(fileId);
+    console.log('File ID:', fileId);
     const storageRef = ref(storage, fileId); // Use fileId for unique naming
     const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -80,20 +90,28 @@ const useStorage = () => {
       },
       (error) => {
         setError(error);
+        console.log('Upload error:', error);
       },
       async () => {
         try {
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
           setUrl(downloadURL);
           setProgress(100); // Set progress to 100% upon successful upload
-          //store data in firestore
-          await addDoc(collection(db, 'images'), {
+          //alert to the user
+          alert('Image uploaded successfully');
+          console.log('Download URL:', downloadURL);
+
+          // Store data in Firestore
+          const docRef = await addDoc(collection(db, 'images'), {
             imageUrl: downloadURL,
             createdAt: new Date(),
             userEmail: user?.email,
+            imageId: fileId,
           });
+          console.log('Document written with ID:', docRef.id);
         } catch (err) {
           setError(err as Error);
+          console.log('Firestore error:', err);
         }
       }
     );
@@ -108,4 +126,5 @@ const useStorage = () => {
 };
 
 export { useStorage };
+
 

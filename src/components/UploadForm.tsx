@@ -23,11 +23,11 @@ const UploadForm = () => {
 
   return (
     <div className="text-center mt-10">
-      <form onSubmit={handleSubmit} className="flex items-center justify-center h-96">
+      <form onSubmit={handleSubmit} className="flex items-center justify-center h-96 mt-2">
         <input 
           type="file"
           onChange={handleFileChange}
-          className="file-input file-input-bordered w-full max-w-xs"
+          className="file-input file-input-bordered w-70 max-w-xs"
         />
         <button className="btn gap-3" 
         // disabled={!selectedFile}

@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import { auth } from '../firebase/config';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -74,6 +75,7 @@ const SignUp = () => {
                   <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                 </label>
               </div>
+              <p>Already have an account? <Link to="/login">Login Now</Link></p>
               <div className="form-control mt-6">
                 <button type="submit" className="btn btn-primary">Sign Up</button>
               </div>

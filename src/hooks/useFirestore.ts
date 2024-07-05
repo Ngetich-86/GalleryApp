@@ -27,6 +27,7 @@ const useFirestore = (collectionName: string) => {
         const createdAt = doc.data().createdAt.toDate();
         const userEmail = doc.data().userEmail;
         images.push({ url: imageUrl, createdAt, userEmail });
+        console.log("data fetched succesfully")
         });
         setDocs(images);
         setIsLoading(false);
@@ -46,3 +47,4 @@ const useFirestore = (collectionName: string) => {
 };
 
 export default useFirestore;
+ 
