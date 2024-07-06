@@ -1,7 +1,7 @@
 
 import { createContext, FC, ReactElement, useEffect, useState } from "react";
 import { auth } from "../firebase/config.ts";
-import { User as FirebaseUser } from "firebase/auth";
+
 
 
 
@@ -34,8 +34,22 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
 
 useEffect(() => {
+    // const unsubscribe = auth.onAuthStateChanged((User) => {
+    //   setUser(User);
+    //   setLoading(false);
+    // });
     const unsubscribe = auth.onAuthStateChanged((User) => {
-      setUser(User);
+      if (User) {
+        const user: User = {
+          uid: User.uid,
+          email: User.email || "",
+          displayName: User.displayName || "",
+          photoURL: User.photoURL || "",
+        };
+        setUser(user);
+      } else {
+        setUser(null);
+      }
       setLoading(false);
     });
 
