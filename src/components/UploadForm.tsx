@@ -32,7 +32,7 @@ const UploadForm = () => {
         <button className="btn gap-3 bg-success" 
         // disabled={!selectedFile}
         >
-          Upload <span>🪄</span>
+          Upload <span>🚀</span>
         </button>
       </form>
     </div>

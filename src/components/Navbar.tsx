@@ -28,11 +28,11 @@ const Navbar = () => {
 
 <div className="navbar bg-success">
   <div className="flex-1">
-    <a className="btn btn-ghost text-xl">Gallery App</a>
+    <a className="btn btn-ghost text-xl">📸Gallery App</a>
   </div>
   <div className="flex-none">
   {/* <button onClick={handleLoginLink} className="btn btn-sm">Login</button> */}
-  <button onClick={handleLogOut}>Logout</button>
+  <button onClick={handleLogOut}>🚪Logout</button>
   </div>
 </div>
   )
