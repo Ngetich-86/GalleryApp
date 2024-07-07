@@ -61,7 +61,7 @@ const Login = () => {
                 Don't have an account? <Link to="/signup">Sign Up</Link>
               </p>
               <div className="form-control mt-6">
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary bg-success">
                   Login Now
                 </button>
               </div>

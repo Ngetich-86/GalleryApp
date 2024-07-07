@@ -77,7 +77,7 @@ const SignUp = () => {
               </div>
               <p>Already have an account? <Link to="/login">Login Now</Link></p>
               <div className="form-control mt-6">
-                <button type="submit" className="btn btn-primary">Sign Up</button>
+                <button type="submit" className="btn btn-primary bg-success">Sign Up</button>
               </div>
             </div>
           </div>

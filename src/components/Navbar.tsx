@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom"
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const handleLoginLink = () => {
-    navigate("/login"); 
-  };
+  // const handleLoginLink = () => {
+  //   navigate("/login"); 
+  // };
   const handleLogOut =async () =>{
     try{
       await signOut(auth)
@@ -25,11 +25,15 @@ const Navbar = () => {
   
   }
   return (
-    <div className="navbar bg-base-100 justify-between">
-  <a className="font-bold text-xl underline">GalleryApp🎇</a>
-  <button onClick={handleLoginLink} className="btn btn-sm">Login</button>
-  <button onClick={handleLogOut}>Logout</button>
 
+<div className="navbar bg-success">
+  <div className="flex-1">
+    <a className="btn btn-ghost text-xl">Gallery App</a>
+  </div>
+  <div className="flex-none">
+  {/* <button onClick={handleLoginLink} className="btn btn-sm">Login</button> */}
+  <button onClick={handleLogOut}>Logout</button>
+  </div>
 </div>
   )
 }
