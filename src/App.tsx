@@ -7,6 +7,7 @@ import { AuthProvider } from './context/auth'
 import PublicRoutes from './routes/PublicRoutes'
 import Login from './pages/Login'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 
 function App() {
   
@@ -22,6 +23,7 @@ function App() {
       <Route path="/login" element={<Login/>} />
       <Route path="/signup" element={<PublicRoutes><SignUp /></PublicRoutes>} />
    </Routes>
+   <Footer />
    </div>
     </AuthProvider>
    
