@@ -22,8 +22,8 @@ const UploadForm = () => {
   };
 
   return (
-    <div className="text-center mt-1">
-      <form onSubmit={handleSubmit} className="flex items-center justify-center h-96 mt-2">
+    <div className="text-center mt-10">
+      <form onSubmit={handleSubmit} className="flex items-center justify-center h-19 mt-2">
         <input 
           type="file"
           onChange={handleFileChange}

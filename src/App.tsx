@@ -23,9 +23,10 @@ function App() {
       <Route path="/login" element={<Login/>} />
       <Route path="/signup" element={<PublicRoutes><SignUp /></PublicRoutes>} />
    </Routes>
-   <Footer />
+   
    </div>
     </AuthProvider>
+    <Footer />
    
     </>
     

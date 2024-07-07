@@ -2,7 +2,7 @@
 
 const Footer = () => {
   return (
-    <footer className="footer footer-center bg-success text-base-content p-4">
+    <footer className="footer footer-center bg-success text-base-content p-4 mb-0">
   <aside>
     <p>
       Copyright © {new Date().getFullYear()} - All rights reserved by 
