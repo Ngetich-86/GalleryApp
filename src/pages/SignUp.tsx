@@ -1,16 +1,17 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import React, { useState } from 'react';
-import { auth } from '../firebase/config';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
-const SignUp = () => {
+
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase/config';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const SignUp: React.FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
-
-  console.log(email, password);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -20,71 +21,76 @@ const SignUp = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission logic here
-    try{
-      await createUserWithEmailAndPassword(auth,email,password)
-      navigate('/');
-
-    }
-    catch(error){
-    setError(error.message)
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      toast.success('Sign up successful!', {
+        position: 'top-right',
+      });
+      navigate('/login');
+    } catch (error: any) {
+      setError(error.message);
+      toast.error(`Sign up failed: ${error.message}`, {
+        position: 'top-left',
+      });
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {error&&<p>{error}</p>}
-      <div className="hero bg-base-200 min-h-screen">
-        <div className="hero-content flex-col lg">
-          <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Ngetich Pixels!</h1>
-            <p className="py-6">
-              Sign up to access all the features for free
-            </p>
-          </div>
-          <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-            <div className="card-body">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email</span>
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={handleEmailChange}
-                  placeholder="Email"
-                  className="input input-bordered"
-                  required
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Password</span>
-                </label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={handlePasswordChange}
-                  placeholder="Password"
-                  className="input input-bordered"
-                  required
-                />
-                <label className="label">
-                  <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                </label>
-              </div>
-              <p>Already have an account? <Link to="/login">Login Now</Link></p>
-              <div className="form-control mt-6">
-                <button type="submit" className="btn btn-primary bg-success">Sign Up</button>
+    <>
+      <ToastContainer />
+      <form onSubmit={handleSubmit}>
+        {error && <p className="text-red-500">{error}</p>}
+        <div className="hero bg-base-200 min-h-screen">
+          <div className="hero-content flex-col lg">
+            <div className="text-center lg:text-left">
+              <h1 className="text-5xl font-bold">Ngetich Pixels!</h1>
+              <p className="py-6">Sign up to access all the features for free</p>
+            </div>
+            <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+              <div className="card-body">
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Email</span>
+                  </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    placeholder="Email"
+                    className="input input-bordered"
+                    required
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Password</span>
+                  </label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    placeholder="Password"
+                    className="input input-bordered"
+                    required
+                  />
+                  <label className="label">
+                    <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+                  </label>
+                </div>
+                <p>Already have an account? <Link to="/login">Login Now</Link></p>
+                <div className="form-control mt-6">
+                  <button type="submit" className="btn btn-primary bg-success">Sign Up</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </>
   );
 };
 
 export default SignUp;
+

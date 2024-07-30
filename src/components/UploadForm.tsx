@@ -1,9 +1,13 @@
 
+
 import React, { useState } from "react";
 import { useStorage } from "../hooks/useStorage";
-const UploadForm = () => {
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const UploadForm: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const {startUpload } = useStorage();
+  const { startUpload } = useStorage();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -11,12 +15,15 @@ const UploadForm = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (selectedFile) {
-      startUpload(selectedFile);
-      console.log(selectedFile);
-      // Reset the file input after handling the submission
+      try {
+        await startUpload(selectedFile);
+        toast.success('Image uploaded successfully!');
+      } catch (error: any) {
+        toast.error(`Error: ${error.message}`);
+      }
       setSelectedFile(null);
     }
   };
@@ -35,6 +42,7 @@ const UploadForm = () => {
           Upload <span>🚀</span>
         </button>
       </form>
+      <ToastContainer />
     </div>
   );
 }
